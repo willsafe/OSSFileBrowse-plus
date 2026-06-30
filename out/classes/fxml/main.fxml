@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.web.WebView?>
+
+<VBox prefHeight="800.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ossfilebrowse.plus.controller.MainController">
+   <children>
+      <!-- 顶部控制区 -->
+      <HBox prefHeight="280.0" prefWidth="1400.0" spacing="14.0" style="-fx-background-color: linear-gradient(to right, #f8fafc, #eef2ff); -fx-border-color: #dbe3f0; -fx-border-width: 0 0 1 0;">
+         <children>
+            <!-- 左侧：代理 -->
+            <VBox prefWidth="380.0" spacing="8.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #d9e2ef; -fx-border-radius: 10;">
+               <children>
+                  <Label text="代理配置（全局）" textFill="#0f172a">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <Label text="代理类型" textFill="#334155">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="cb_proxy_type" prefWidth="200.0" promptText="选择代理类型" />
+                  <Label text="Host" textFill="#334155">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="tf_proxy_host" promptText="例如 127.0.0.1" />
+                  <Label text="Port" textFill="#334155">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="tf_proxy_port" promptText="例如 7890 / 8080" />
+                  <Button mnemonicParsing="false" onAction="#ApplyProxy" prefHeight="34.0" prefWidth="140.0" style="-fx-background-color: #0ea5e9; -fx-text-fill: white; -fx-background-radius: 8;" text="应用代理" />
+               </children>
+               <padding>
+                  <Insets left="14.0" right="14.0" top="12.0" bottom="12.0" />
+               </padding>
+            </VBox>
+
+            <!-- 中间：目标配置+主要操作 -->
+            <VBox prefWidth="620.0" spacing="10.0" HBox.hgrow="ALWAYS" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #d9e2ef; -fx-border-radius: 10;">
+               <children>
+                  <Label text="目标配置与操作" textFill="#0f172a">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <Label text="kkFileView 地址" textFill="#334155">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="tf_kkfileview_url" />
+                  <Label text="存储桶地址" textFill="#334155">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="tf_oss_url" />
+                  <HBox spacing="10.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#Loading" prefHeight="38.0" prefWidth="130.0" style="-fx-background-color: #2563eb; -fx-text-fill: white; -fx-background-radius: 8;" text="加载" />
+                        <Button mnemonicParsing="false" onAction="#PreviousFile" prefHeight="38.0" prefWidth="110.0" style="-fx-background-color: #e2e8f0; -fx-text-fill: #0f172a; -fx-background-radius: 8;" text="上一个" />
+                        <Button mnemonicParsing="false" onAction="#NextFile" prefHeight="38.0" prefWidth="110.0" style="-fx-background-color: #e2e8f0; -fx-text-fill: #0f172a; -fx-background-radius: 8;" text="下一个" />
+                        <Button mnemonicParsing="false" onAction="#ExportLeftResourcesTxt" prefHeight="38.0" prefWidth="120.0" style="-fx-background-color: #10b981; -fx-text-fill: white; -fx-background-radius: 8;" text="导出TXT" />
+                     </children>
+                  </HBox>
+               </children>
+               <padding>
+                  <Insets left="14.0" right="14.0" top="12.0" bottom="12.0" />
+               </padding>
+            </VBox>
+
+            <!-- 右侧：自定义请求头 -->
+            <VBox prefWidth="360.0" spacing="8.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #d9e2ef; -fx-border-radius: 10;">
+               <children>
+                  <Label text="自定义请求头 (Header)" textFill="#0f172a">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label text="格式: Key: Value (每行一个)" textFill="#64748b">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+                  <TextArea fx:id="ta_custom_headers" prefHeight="88.0" wrapText="true" promptText="例如&#10;User-Agent: Mozilla/5.0&#10;X-Test: 1" />
+                  <Label text="图片直连后缀（逗号分隔）" textFill="#334155">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="tf_image_extensions" promptText="例如 .jpg,.png,.webp,.svg" />
+                  <Label text="允许预览后缀（逗号分隔）" textFill="#334155">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="tf_allow_extensions" promptText="例如 .pdf,.docx,.xlsx,.jpg" />
+                  <Button mnemonicParsing="false" onAction="#ApplyPreviewExtensions" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: #0f766e; -fx-text-fill: white; -fx-background-radius: 8;" text="应用预览后缀" />
+               </children>
+               <padding>
+                  <Insets left="12.0" right="12.0" top="12.0" bottom="12.0" />
+               </padding>
+            </VBox>
+         </children>
+         <padding>
+            <Insets left="10.0" right="10.0" top="10.0" bottom="10.0" />
+         </padding>
+      </HBox>
+
+      <!-- 下部内容区：左列表，右预览 -->
+      <HBox prefHeight="620.0" prefWidth="1400.0" spacing="8.0" VBox.vgrow="ALWAYS">
+         <children>
+            <VBox prefWidth="420.0" spacing="4.0" style="-fx-background-color: #f8fafc; -fx-border-color: #d9e2ef; -fx-border-width: 0 1 0 0;">
+               <children>
+                  <Label text="资源搜索" textFill="#334155">
+                     <VBox.margin>
+                        <Insets left="8.0" top="6.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <HBox spacing="6.0">
+                     <children>
+                        <TextField fx:id="tf_search" promptText="输入关键字筛选左侧资源" HBox.hgrow="ALWAYS" />
+                        <Button mnemonicParsing="false" onAction="#SearchResources" prefWidth="64.0" text="搜索" />
+                        <Button mnemonicParsing="false" onAction="#ClearSearch" prefWidth="64.0" text="清空" />
+                     </children>
+                     <VBox.margin>
+                        <Insets left="8.0" right="8.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <TreeView fx:id="treeView" prefWidth="420.0" VBox.vgrow="ALWAYS" />
+                  <Label fx:id="lb_proxy_status" text="代理状态：未生效" textFill="#d70b0b">
+                     <VBox.margin>
+                        <Insets left="8.0" top="4.0" bottom="4.0" />
+                     </VBox.margin>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets left="8.0" right="4.0" bottom="6.0" />
+               </padding>
+            </VBox>
+
+            <VBox HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" style="-fx-background-color: #ffffff;">
+               <children>
+                  <WebView fx:id="webView" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
+               </children>
+               <padding>
+                  <Insets right="8.0" bottom="6.0" />
+               </padding>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</VBox>
